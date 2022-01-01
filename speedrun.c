@@ -36,22 +36,6 @@ int main(void)
         screenHeight = GetScreenHeight();
         screenWidth = GetScreenWidth();
         mousePosition = GetMousePosition();
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(mousePosition, start) || IsKeyPressed(KEY_F5))
-        {
-            should_start = true;
-        }
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(mousePosition, stop) || IsKeyPressed(KEY_F6))
-        {
-                should_start = false;
-        }
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(mousePosition, restart) || IsKeyPressed(KEY_F7))
-        {
-            StopMusicStream(music);
-            PlayMusicStream(music);
-                
-            time = 0;
-            should_start = false;
-        }
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(mousePosition, settings)){
             settings_clicked = !settings_clicked;
             should_start = false;
@@ -62,6 +46,22 @@ int main(void)
             }
         sprintf(timestring,"%f",(float)time);
             if (!settings_clicked){
+                if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(mousePosition, start) || IsKeyPressed(KEY_F5))
+                {
+                    should_start = true;
+                }
+                if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(mousePosition, stop) || IsKeyPressed(KEY_F6))
+                {
+                    should_start = false;
+                }
+                if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(mousePosition, restart) || IsKeyPressed(KEY_F7))
+                {
+                    StopMusicStream(music);
+                    PlayMusicStream(music);
+                
+                    time = 0;
+                    should_start = false;
+                }
                 BeginDrawing();
                     ClearBackground(BLACK);
                     DrawRectangleRec(start,GREEN);
@@ -75,14 +75,15 @@ int main(void)
                     DrawText("(F6)", GetMiddleX(stop, "(F6)"), GetMiddleY(stop,1.75), 10, BLACK);
                     DrawText("Reset", GetMiddleX(restart, "Reset"), GetMiddleY(restart,3), 10, BLACK);
                     DrawText("(F7)", GetMiddleX(restart, "(F7)"), GetMiddleY(restart,1.75), 10, BLACK);
-                    DrawText("Settings", GetMiddleX(settings, "Settings"), settings.y, 10, BLACK);
+                    DrawText("Settings", GetMiddleX(settings, "Settings"), settings.y+2, 10, BLACK);
                 EndDrawing();
             }
             if (settings_clicked){
                 BeginDrawing();
                     ClearBackground(GRAY);
                     DrawText("Settings",80,10,20,BLACK);
-                    DrawRectangleRec(settings,BLUE);
+                    DrawRectangleRec(settings,BLACK);
+                    DrawText("Back",GetMiddleX(settings,"Back"),settings.y +2 ,10,RAYWHITE);
                 EndDrawing();
                 
             }
